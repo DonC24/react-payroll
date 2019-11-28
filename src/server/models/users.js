@@ -19,7 +19,6 @@ module.exports = (dbPoolInstance) => {
                 }
             }
         })
-
     }
 
     let isUserExist = (userInfo, callback) => {

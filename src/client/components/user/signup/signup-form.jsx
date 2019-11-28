@@ -12,22 +12,22 @@ class SignupForm extends React.Component {
             formInputs: {
                 username: "",
                 name: "",
-                lastName: "",
                 email: "",
                 password: "",
                 confirmPassword: "",
                 nationality: "",
                 ethnic: "",
                 birthdate: "",
-                admin: False
+                admin: false
             },
             errorMessage: ""
         };
     }
 
     submit = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         let formInputs = this.state.formInputs;
+        console.log(formInputs);
         let validated = true;
         let errorMessage = "";
         Object.keys(formInputs).forEach(function (item) {
@@ -88,9 +88,16 @@ class SignupForm extends React.Component {
         formInputs.birthdate = e.target.value;
         this.setState({formInputs: formInputs});
     };
+    updateAdmin = (e) => {
+        let formInputs = this.state.formInputs;
+        formInputs.admin = e.target.value;
+        this.setState({formInputs: formInputs});
+    };
 
 
     signupUser = (data) => {
+        console.log("in signup User");
+        console.log(data);
         fetch('/signup', {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}
@@ -105,7 +112,7 @@ class SignupForm extends React.Component {
                     this.setState({errorMessage: "This NRIC/FIN is already in use"})
                 }
             })
-            // .catch(error => {console.error('Error: ', error)});
+            .catch(error => {console.error('Error: ', error)});
     };
 
     render() {
@@ -118,7 +125,7 @@ class SignupForm extends React.Component {
                 <Row>
                     <Col xs={12} md={6}>
                         <Form.Group>
-                            <label>Username</label>
+                            <label>Username </label>
                             <Form.Control type="text" placeholder="NRIC/FIN number" value={this.state.formInputs.username} onChange={this.updateUsername}></Form.Control>
                         </Form.Group>
                     </Col>
@@ -126,7 +133,7 @@ class SignupForm extends React.Component {
                 <Row>
                     <Col xs={12} md={6}>
                         <Form.Group>
-                            <label>First Name</label>
+                            <label>Name (as per IC/Passport) </label>
                             <Form.Control type="text" value={this.state.formInputs.name} onChange={this.updateName}></Form.Control>
                         </Form.Group>
                     </Col>
@@ -134,7 +141,7 @@ class SignupForm extends React.Component {
                 <Row>
                     <Col >
                         <Form.Group>
-                            <label>Email</label>
+                            <label>Email </label>
                             <Form.Control type="email" value={this.state.formInputs.email} onChange={this.updateEmail}></Form.Control>
                         </Form.Group>
                     </Col>
@@ -142,13 +149,13 @@ class SignupForm extends React.Component {
                 <Row>
                     <Col xs={12} md={6}>
                         <Form.Group>
-                            <label>Password</label>
+                            <label>Password </label>
                             <Form.Control type="password" value={this.state.formInputs.password} onChange={this.updatePassword}></Form.Control>
                         </Form.Group>
                     </Col>
                     <Col xs={12} md={6}>
                         <Form.Group>
-                            <label>Confirm Password</label>
+                            <label>Confirm Password </label>
                             <Form.Control type="password" value={this.state.formInputs.confirmPassword} onChange={this.updateConfirmPassword}></Form.Control>
                         </Form.Group>
                     </Col>
@@ -156,7 +163,7 @@ class SignupForm extends React.Component {
                 <Row>
                     <Col >
                         <Form.Group>
-                            <label>Nationality</label>
+                            <label>Nationality </label>
                             <Form.Control as="select" value={this.state.formInputs.nationality} onChange={this.updateNationality}>
                                 <option value="">-- select one --</option>
                                 <option value="singaporean">Singaporean</option>
@@ -359,9 +366,10 @@ class SignupForm extends React.Component {
                 </Row>
                 <Row>
                     <Form.Group as={Col}>
-                      <Form.Label>Ethnicity</Form.Label>
+                      <Form.Label>Ethnicity </Form.Label>
                       <Form.Control as="select" value={this.state.formInputs.ethnic} onChange={this.updateEthnic}>
                         <option>Choose...</option>
+                        <option value="na">Not Singaporean or PR</option>
                         <option value="chinese">Chinese</option>
                         <option value="indian">Indian</option>
                         <option value="malay">Malay</option>
@@ -372,8 +380,15 @@ class SignupForm extends React.Component {
                 <Row>
                     <Col>
                         <Form.Group>
-                            <label>Birthday</label>
+                            <label>Birthday </label>
                             <Form.Control type="date" value={this.state.formInputs.birthdate} onChange={this.updateBirthdate}></Form.Control>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group>
+                            <Form.Control type="hidden" value={this.state.formInputs.admin} onChange={this.updateAdmin}></Form.Control>
                         </Form.Group>
                     </Col>
                 </Row>

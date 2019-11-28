@@ -6,6 +6,8 @@ module.exports = (db) => {
 
 
     let signUp = (request, response) => {
+        console.log("in signup req")
+        console.log(request.body);
         request.body.password = sha256(request.body.password);
         request.body.email = request.body.email.toLowerCase();
         db.users.isUserExist(request.body,(error,result)=>{
@@ -29,8 +31,6 @@ module.exports = (db) => {
                 response.send(false)
             }
         })
-
-
     };
 
     let login = (request, response) => {
