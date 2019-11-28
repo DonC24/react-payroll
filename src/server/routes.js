@@ -1,8 +1,9 @@
 module.exports = (app, db) => {
 
-  const pokemon = require('./controllers/pokemon')(db);
+    const users = require('./controllers/users')(db);
 
-  app.get('/pokemon/:id', pokemon.get);
-
-  app.get('/api/pokemon/:id', pokemon.apiget);
+    app.post('/signup', users.signUp);
+    app.post('/login', users.login);
+    app.get('/signout', users.signOut);
+    app.get('/get_user_info', users.getUserInfo);
 };

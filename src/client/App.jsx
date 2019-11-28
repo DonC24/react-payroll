@@ -1,43 +1,65 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 
-import { Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 
 import Signup from './components/user/signup/signup';
-
-import Counter from './components/counter/counter';
-import Form from './components/form/form';
 
 import { sha256 } from 'js-sha256';
 const SALT = "This is a payroll";
 
+import {Container} from 'react-bootstrap';
+
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      message: 'hello',
-    };
-  }
+    constructor() {
+        super();
+        this.state = {
+                authed : false,
+                userId : null,
+                username: null
+        };
+    }
+
+    componentDidMount() {
+        console.log("APP mounted");
+        this.checkUser();
+    }
+
+    checkUser = () => {
+        let cookies = {};
+        document.cookie.split("; ").forEach( value => {
+            let val = value.split("=");
+            cookies[val[0]] = val[1];
+        });
+        if(cookies.session === sha256(cookies.user_id + "logged_in" + SALT)){
+            this.setState({
+                authed: true,
+                userId: parseInt(cookies.user_id),
+                username: cookies.user_name
+            });
+        }else {
+            this.setState({
+                authed: false
+            });
+        }
+    }
 
   render() {
+    // console.log('state',this.state.authed);
     return (
 
-        <div>
-            <nav>
+            <Router>
+                <nav>
                 <h1>React Router</h1>
-                <Link to="/bananas">Bananas</Link>
+                <Link to="/signup">Sign Up</Link>
                 <Link to="/oranges">Oranges</Link>
             </nav>
-            <main>
-                <Route path="/" render={props => (
-                    <Navigation authed={this.state.authed} checkUser={this.checkUser} username={this.state.username} {...props}/>
-                )}/>
                 <Container>
-                    <Route path="/login/" render={props => (this.state.authed ? <Redirect to='/' /> : <Login {...props}/>)}/>
-                    <Route path="/signup/" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
+                    <Switch>
+                        <Route path="/signup" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
+                    </Switch>
                 </Container>
-            </main>
-        </div>
+            </Router>
 
     );
   }
