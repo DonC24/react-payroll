@@ -4,6 +4,7 @@ import { hot } from 'react-hot-loader';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 
 import Signup from './components/user/signup/signup';
+import Login from './components/user/login/login';
 
 import { sha256 } from 'js-sha256';
 const SALT = "This is a payroll";
@@ -50,13 +51,14 @@ class App extends React.Component {
 
             <Router>
                 <nav>
-                <h1>React Router</h1>
-                <Link to="/signup">Sign Up</Link>
-                <Link to="/oranges">Oranges</Link>
-            </nav>
+                    <h1>React Router</h1>
+                    <Link to="/signup">Sign Up </Link>
+                    <Link to="/login">Login</Link>
+                </nav>
                 <Container>
                     <Switch>
                         <Route path="/signup" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
+                        <Route path="/login" render={props => (this.state.authed ? <Redirect to='/' /> : <Login {...props}/>)}/>
                     </Switch>
                 </Container>
             </Router>

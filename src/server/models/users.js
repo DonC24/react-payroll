@@ -40,9 +40,9 @@ module.exports = (dbPoolInstance) => {
         });
     }
 
-    let getUserByEmail = (userInfo,callback) =>{
-        let query = "SELECT * FROM users WHERE email = $1"
-        let arr = [userInfo.email]
+    let getUserByUsername = (userInfo,callback) =>{
+        let query = "SELECT * FROM users WHERE username = $1"
+        let arr = [userInfo.username]
 
         dbPoolInstance.query(query, arr, (error, queryResult) => {
             if (error) {
@@ -57,23 +57,6 @@ module.exports = (dbPoolInstance) => {
             }
         });
     }
-
-/*    let getUserGender = async function (user_id){
-        try{
-            let query = "SELECT * FROM users WHERE id = $1";
-            let arr = [user_id]
-            let queryResult = await dbPoolInstance.query(query,arr)
-            if(queryResult.rows.length>0){
-                console.log("GET USER GENDER SUCCESS");
-                return queryResult.rows[0].gender;
-            }else{
-                return Promise.reject(new Error("get user gender returns null"));
-            }
-
-        } catch (error){
-            console.log("get user gender" + error);
-        }
-    }*/
 
     let getUserIdsByEmails = async function (email_arr){
         try{
@@ -245,7 +228,7 @@ module.exports = (dbPoolInstance) => {
     return {
         signUp,
         isUserExist,
-        getUserByEmail,
+        getUserByUsername,
         getUserIdsByEmails,
         createGroup,
         insertUserIntoGroups,
@@ -256,6 +239,5 @@ module.exports = (dbPoolInstance) => {
         deleteGroup,
         changePassword,
         changeProfilePic
-
     };
 };

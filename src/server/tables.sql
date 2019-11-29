@@ -12,7 +12,9 @@ CREATE TABLE IF NOT EXISTS users (
   nationality TEXT,
   ethnic TEXT,
   birthdate DATE,
-  admin BOOLEAN);
+  admin BOOLEAN,
+  company_id INTEGER,
+  FOREIGN KEY (company_id) REFERENCES company(id));
 
 CREATE TABLE IF NOT EXISTS company_employees (
 	id SERIAL PRIMARY KEY,
@@ -29,4 +31,17 @@ CREATE TABLE IF NOT EXISTS contracts (
   hourlyrate DECIMAL,
   daysperwk DECIMAL,
   user_id INTEGER,
+  FOREIGN KEY (user_id) REFERENCES users(id));
+
+CREATE TABLE IF NOT EXISTS payroll (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER,
+  month DATE,
+  allowance DECIMAL,
+  grosssalary DECIMAL,
+  ethnicamt DECIMAL,
+  companyrate DECIMAL,
+  companycpf INTEGER,
+  employeerate DECIMAL,
+  employeecpf INTEGER,
   FOREIGN KEY (user_id) REFERENCES users(id));

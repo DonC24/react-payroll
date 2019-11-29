@@ -44,6 +44,7 @@ module.exports = {
    */
   pokemon: pokemon(pool),
   users: users(pool),
+  contracts: contracts(pool),
 
   //make queries directly from here
   queryInterface: (text, params, callback) => {

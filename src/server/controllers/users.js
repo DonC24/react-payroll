@@ -10,6 +10,7 @@ module.exports = (db) => {
         console.log(request.body);
         request.body.password = sha256(request.body.password);
         request.body.email = request.body.email.toLowerCase();
+        request.body.username = request.body.username.toUpperCase();
         db.users.isUserExist(request.body,(error,result)=>{
             if (!result.exists) {
 
@@ -35,13 +36,13 @@ module.exports = (db) => {
 
     let login = (request, response) => {
         request.body.password = sha256(request.body.password);
-        request.body.email = request.body.email.toLowerCase();
-        db.users.getUserByEmail(request.body,(error,result)=>{
+        request.body.username = request.body.username.toUpperCase();
+        db.users.getUserByUsername(request.body,(error,result)=>{
             if (result) {
                 if (result.password === request.body.password){
                     console.log("USER & PASSWORD MATCHED");
                     response.cookie("user_id", result.id);
-                    response.cookie("user_name", result.firstname);
+                    response.cookie("user_name", result.name);
                     response.cookie("session", sha256(result.id + "logged_in" + SALT));
                     response.send(true);
                 }else{
