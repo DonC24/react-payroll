@@ -6,8 +6,8 @@ module.exports = (db) => {
 
 
     let signUp = (request, response) => {
-        console.log("in signup req")
-        console.log(request.body);
+        // console.log("in signup req")
+        // console.log(request.body);
         request.body.password = sha256(request.body.password);
         request.body.email = request.body.email.toLowerCase();
         request.body.username = request.body.username.toUpperCase();
@@ -28,7 +28,7 @@ module.exports = (db) => {
                     }
                 })
             } else {
-                console.log("EMAIL ALREADY EXISTS")
+                console.log("EMAIL/USERNAME ALREADY EXISTS")
                 response.send(false)
             }
         })
@@ -44,7 +44,7 @@ module.exports = (db) => {
                     response.cookie("user_id", result.id);
                     response.cookie("user_name", result.name);
                     response.cookie("session", sha256(result.id + "logged_in" + SALT));
-                    response.send(true);
+                    response.send(result);
                 }else{
                     console.log("PASSWORD DOES NOT MATCH");
                     response.send(false);
@@ -64,6 +64,22 @@ module.exports = (db) => {
         response.cookie("session", sha256(SALT))
         console.log("successful signout")
         response.send(true)
+    }
+
+    let getAllUsers = (request, response) => {
+        console.log(request.params.id);
+        db.users.getAllUsers(request.params.id,(error,result)=>{
+            // console.log(result)
+            if (result) {
+                    console.log("THERE ARE EMPLOYEES");
+                    console.log(response);
+                    response.send(result);
+
+            } else {
+                console.log("DON'T HAVE SUCH A COMPANY")
+                response.send(false)
+            }
+        })
     }
 
     let editProfileGeneral = async function (request,response){
@@ -107,6 +123,7 @@ module.exports = (db) => {
     }
 
     return {
+        getAllUsers : getAllUsers,
         signUp : signUp,
         login : login,
         signOut : signOut,
