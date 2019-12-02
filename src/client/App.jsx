@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-ro
 
 import Signup from './components/user/signup/signup';
 import Login from './components/user/login/login';
+import Dashboard from './components/index/dashboard/dashboard';
 
 import { sha256 } from 'js-sha256';
 const SALT = "This is a payroll";
@@ -17,7 +18,8 @@ class App extends React.Component {
         this.state = {
                 authed : false,
                 userId : null,
-                username: null
+                username: null,
+                currentuser: null
         };
     }
 
@@ -25,6 +27,8 @@ class App extends React.Component {
         console.log("APP mounted");
         this.checkUser();
     }
+
+
 
     checkUser = () => {
         let cookies = {};
@@ -46,7 +50,7 @@ class App extends React.Component {
     }
 
   render() {
-    // console.log('state',this.state.authed);
+    console.log('state', this.state.authed);
     return (
 
             <Router>
@@ -57,8 +61,10 @@ class App extends React.Component {
                 </nav>
                 <Container>
                     <Switch>
+                        <Route exact path="/" render={props => (this.state.authed ? <Dashboard {...props} /> : <Redirect to='/' />)}/>
                         <Route path="/signup" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
                         <Route path="/login" render={props => (this.state.authed ? <Redirect to='/' /> : <Login {...props}/>)}/>
+
                     </Switch>
                 </Container>
             </Router>

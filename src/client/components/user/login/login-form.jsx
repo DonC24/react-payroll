@@ -6,26 +6,29 @@ import {Col, Form, Row} from 'react-bootstrap';
 
 
 class LoginForm extends React.Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             formInputs: {
                 username: "",
-                password: "",
+                password: ""
             },
             errorMessage: ""
         };
     }
+
     updateUsername = (e) => {
         let formInputs = this.state.formInputs;
         formInputs.username = e.target.value;
         this.setState({formInputs: formInputs});
     };
+
     updatePassword = (e) => {
         let formInputs = this.state.formInputs;
         formInputs.password = e.target.value;
         this.setState({formInputs: formInputs});
     };
+
     submit = (e) => {
         e.preventDefault();
         let formInputs = this.state.formInputs;
@@ -55,7 +58,6 @@ class LoginForm extends React.Component {
         })
             .then(res => {
                 if (res) {
-
                     this.props.history.push('/');
 
                 } else {
@@ -65,6 +67,8 @@ class LoginForm extends React.Component {
             .catch(error => console.error('Error:', error));
     };
     render() {
+        console.log("login form");
+        // console.log(this.state.currentuser);
         let errorMessage = null;
         if (this.state.errorMessage !== ""){
             errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);

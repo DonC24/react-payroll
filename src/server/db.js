@@ -2,6 +2,7 @@ const pg = require('pg');
 const pokemon = require('./models/pokemon');
 
 const users = require('./models/users');
+const contracts = require('./models/contracts');
 
 const url = require('url');
 

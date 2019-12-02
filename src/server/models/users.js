@@ -58,6 +58,21 @@ module.exports = (dbPoolInstance) => {
         });
     }
 
+    let getAllUsers = (userInfo, callback) => {
+        console.log(userInfo)
+        let query = "SELECT * FROM users WHERE company_id = $1"
+        let arr = [userInfo]
+
+        dbPoolInstance.query(query, arr, (error, queryResult) => {
+            if (queryResult.rows.length > 0) {
+                console.log(queryResult);
+                callback(null, queryResult.rows);
+            } else {
+                callback(null, null);
+            }
+        });
+    }
+
     let getUserIdsByEmails = async function (email_arr){
         try{
             let arr = [email_arr]
@@ -226,6 +241,7 @@ module.exports = (dbPoolInstance) => {
     }
 
     return {
+        getAllUsers,
         signUp,
         isUserExist,
         getUserByUsername,
