@@ -29,19 +29,6 @@ class Employees extends React.Component {
             .catch(error => console.error('Error:', error));
     }
 
-    createContract = () => {
-        console.log("Create a Contract");
-        let compId = parseInt(this.props.companyId)
-        fetch('/get_all_users/'+ compId)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                // return JSON.stringify(res);
-                this.setState({employees : res});
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
     mapfunc(array) {
         return array.map(anemployee => {
 
