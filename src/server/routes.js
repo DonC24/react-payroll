@@ -2,6 +2,7 @@ module.exports = (app, db) => {
 
     const users = require('./controllers/users')(db);
     const contracts = require('./controllers/contracts')(db);
+    const payroll = require('./controllers/payroll')(db);
 
     app.post('/signup', users.signUp);
     app.post('/login', users.login);
