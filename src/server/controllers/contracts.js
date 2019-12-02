@@ -1,8 +1,8 @@
 module.exports = (db) => {
 
     let createContract = (request, response) => {
-        // console.log("in create contract controller")
-        // console.log(request.body);
+        console.log("in create contract controller")
+        console.log(request.body);
         db.contracts.createContract(request.body,(error,result)=>{
             if (error) {
               console.error('error getting contract', error);
@@ -14,7 +14,7 @@ module.exports = (db) => {
                     response.send('not found');
                 }else{
                     console.log("CONTRACT CREATED")
-                    response.send(result);
+                    response.send("Contract Created" + result);
                 }
             }
         })

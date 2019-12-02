@@ -10,7 +10,7 @@ module.exports = (dbPoolInstance) => {
           contract.basichours,
           contract.hourlyrate,
           contract.daysperwk,
-          contract.userid
+          contract.employee
         ];
 
         // execute query

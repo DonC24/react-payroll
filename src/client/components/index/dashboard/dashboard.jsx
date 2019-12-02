@@ -15,8 +15,8 @@ class Dashboard extends React.Component {
         };
     }
 
-        getCurrentUser = () => {
-        console.log("getting currentuser & all employees");
+    getCurrentUser = () => {
+        console.log("getting currentuser");
         let reactThis = this;
         fetch('/get_user_info')
             .then(res => res.json())

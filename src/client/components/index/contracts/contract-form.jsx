@@ -10,12 +10,11 @@ class ContractForm extends React.Component {
         super();
         this.state = {
             formInputs: {
-                username: "",
-                name: "",
+                employee: null,
                 basicsalary: null,
-                basichrs: "",
-                daysperwk: null
-
+                basichours: null,
+                daysperwk: null,
+                // hourlyrate: null
             },
             errorMessage: ""
         };
@@ -34,8 +33,14 @@ class ContractForm extends React.Component {
             }
         });
 
+        if (validated) {
+            this.createContract(formInputs);
+        }else {
+            this.setState({errorMessage})
+        }
+
     };
-    updateUsername = (e) => {
+/*    updateUsername = (e) => {
         let formInputs = this.state.formInputs;
         formInputs.username = e.target.value;
         this.setState({formInputs: formInputs});
@@ -44,15 +49,16 @@ class ContractForm extends React.Component {
         let formInputs = this.state.formInputs;
         formInputs.name = e.target.value;
         this.setState({formInputs: formInputs});
-    };
+    };*/
+
     updateBasicSalary = (e) => {
         let formInputs = this.state.formInputs;
         formInputs.basicsalary = e.target.value;
         this.setState({formInputs: formInputs});
     };
-    updateBasicHrs = (e) => {
+    updateBasicHours = (e) => {
         let formInputs = this.state.formInputs;
-        formInputs.basichrs = e.target.value;
+        formInputs.basichours = e.target.value;
         this.setState({formInputs: formInputs});
     };
     updateDaysPerWk = (e) => {
@@ -60,6 +66,61 @@ class ContractForm extends React.Component {
         formInputs.daysperwk = e.target.value;
         this.setState({formInputs: formInputs});
     };
+    updateHourlyRate = (e) => {
+        console.log("hourly rate on change")
+        console.log(e);
+        let formInputs = this.state.formInputs;
+        formInputs.hourlyrate = e.target.value;
+        this.setState({formInputs: formInputs});
+    };
+    updateEmployee = (e) => {
+        let formInputs = this.state.formInputs;
+        formInputs.employee = e.target.value;
+        this.setState({formInputs: formInputs});
+    };
+
+    getEmployees = () => {
+        console.log("getting currentuser");
+        let dropdown = document.getElementById('selectcols');
+        dropdown.length = 0;
+
+        let defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Employee';
+        dropdown.add(defaultOption);
+        dropdown.selectedIndex = 0;
+        fetch('/get_user_info')
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                // return JSON.stringify(res);
+                let compId = parseInt(res.company_id)
+                return fetch('/get_all_users/' + compId);
+            })
+            .then(response => {
+                    if (response.status !== 200) {
+                        console.warn('Looks like there was a problem. Status Code: ' +
+                          response.status);
+                        return;
+                    }
+
+                    response.json().then(function(data) {
+                        let option;
+                        console.log(data);
+                        for (let i = 0; i < data.length; i++) {
+                            option = document.createElement('option');
+                            option.text = data[i].name + " " + data[i].username;
+                            option.value = data[i].id;
+                            dropdown.add(option);
+                        }
+                    });
+                }
+            )
+            .catch(error => console.error('Error:', error));
+    }
+
+    componentDidMount(){
+        this.getEmployees();
+    }
 
     createContract = (data) => {
         console.log("in create contract");
@@ -75,7 +136,7 @@ class ContractForm extends React.Component {
                 if (res) {
                     this.props.history.push('/')
                 }else{
-                    this.setState({errorMessage: "This NRIC/FIN is already in use"})
+                    this.setState({errorMessage: "There was an error"})
                 }
             })
             .catch(error => {console.error('Error: ', error)});
@@ -87,27 +148,22 @@ class ContractForm extends React.Component {
             errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
         }
 
-        let hrlyRate = ((12 * parseInt(this.state.formInputs.basicsalary)) / (52 * parseFloat(this.state.formInputs.daysperwk) * parseFloat(this.state.formInputs.basichrs)));
+        let hrlyRate = ((12 * parseInt(this.state.formInputs.basicsalary)) / (52 * parseFloat(this.state.formInputs.daysperwk) * parseFloat(this.state.formInputs.basichours)));
+        // cannot setstate here. not sure how to setstate for hourly rate.
         console.log("hrly Rate: " + hrlyRate);
 
         return (
             <Form className={mainStyles.signupForm}>
+
                 <Row>
-                    <Col xs={12} md={6}>
-                        <Form.Group>
-                            <label>Username </label>
-                            <Form.Control type="text" placeholder="NRIC/FIN number" value={this.state.formInputs.username} onChange={this.updateUsername}></Form.Control>
-                        </Form.Group>
-                    </Col>
+                    <Form.Group as={Col}>
+                      <Form.Label>Employee </Form.Label>
+                      <Form.Control as="select" id="selectcols" value={this.state.formInputs.employee} onChange={this.updateEmployee}>
+
+                      </Form.Control>
+                    </Form.Group>
                 </Row>
-                <Row>
-                    <Col xs={12} md={6}>
-                        <Form.Group>
-                            <label>Name (as per IC/Passport) </label>
-                            <Form.Control type="text" value={this.state.formInputs.name} onChange={this.updateName}></Form.Control>
-                        </Form.Group>
-                    </Col>
-                </Row>
+
                 <Row>
                     <Col >
                         <Form.Group>
@@ -120,7 +176,7 @@ class ContractForm extends React.Component {
                     <Col xs={12} md={6}>
                         <Form.Group>
                             <label>Basic Hours </label>
-                            <Form.Control type="number" step="0.1" min="0" value={this.state.formInputs.basichrs} onChange={this.updateBasicHrs}></Form.Control>
+                            <Form.Control type="number" step="0.1" min="0" value={this.state.formInputs.basichours} onChange={this.updateBasicHours}></Form.Control>
                         </Form.Group>
                     </Col>
                 </Row>
@@ -140,7 +196,7 @@ class ContractForm extends React.Component {
                     <Col xs={12} md={6}>
                         <Form.Group>
                             <label>Hourly Rate </label>
-                            <Form.Control type="number" value={hrlyRate} readOnly></Form.Control>
+                            <Form.Control type="number" value={hrlyRate} onChange={this.updateHourlyRate} readOnly></Form.Control>
                         </Form.Group>
                     </Col>
                 </Row>
