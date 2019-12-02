@@ -71,14 +71,10 @@ module.exports = (db) => {
         db.users.getAllUsers(request.params.id,(error,result)=>{
             // console.log(result)
             if (result) {
-                // if (result.company.id === request.body.company_id){
                     console.log("THERE ARE EMPLOYEES");
                     console.log(response);
                     response.send(result);
-                // }else{
-                    // console.log("DON'T HAVE SUCH A COMPANY");
-                    // response.send(false);
-                // }
+
             } else {
                 console.log("DON'T HAVE SUCH A COMPANY")
                 response.send(false)

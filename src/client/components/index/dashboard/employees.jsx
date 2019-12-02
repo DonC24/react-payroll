@@ -29,11 +29,23 @@ class Employees extends React.Component {
             .catch(error => console.error('Error:', error));
     }
 
+    createContract = () => {
+        console.log("Create a Contract");
+        let compId = parseInt(this.props.companyId)
+        fetch('/get_all_users/'+ compId)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                // return JSON.stringify(res);
+                this.setState({employees : res});
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
     mapfunc(array) {
         return array.map(anemployee => {
 
-            let formatteddate = Moment(anemployee.birthdate).utc().format("DD MMM YY");
-            // console.log(thiseventid);
+            let formatteddate = Moment(anemployee.birthdate).utc().format("DD MMM YYYY");
 
             return(
                 <tr>
@@ -45,9 +57,8 @@ class Employees extends React.Component {
                     <td>{`${anemployee.ethnic}`}</td>
                     <td>{`${formatteddate}`}</td>
                     <td>{`${anemployee.admin}`}</td>
-                    <td><a href="#">Create new contract</a></td>
-                    <td><a href="#">View contract</a></td>
-                    <td><a href="#">Edit details</a></td>
+                    <td><a href="#">View employee details</a></td>
+                    <td><a href="#">Edit employee details</a></td>
                     <td><a href="#">Delete employee</a></td>
                 </tr>
             )
@@ -79,27 +90,28 @@ class Employees extends React.Component {
             <Row>
                 <Col>
                     <h2>Employees</h2>
+                    <Link to="/contracts">Create new contract</Link>
                     <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">NRIC/FIN</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Nationality</th>
-                            <th scope="col">Ethnicity</th>
-                            <th scope="col">Birthdate</th>
-                            <th scope="col">Admin</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {empinfo}
-                    </tbody>
-                </table>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">NRIC/FIN</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Nationality</th>
+                                <th scope="col">Ethnicity</th>
+                                <th scope="col">Birthdate</th>
+                                <th scope="col">Admin</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {empinfo}
+                        </tbody>
+                    </table>
                 </Col>
             </Row>
         )

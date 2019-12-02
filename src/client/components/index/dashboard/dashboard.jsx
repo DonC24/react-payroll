@@ -40,12 +40,12 @@ class Dashboard extends React.Component {
             errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
         }
 
-        let employees = "";
+        let main = "";
         if(this.state.currentuser){
             if(this.state.currentuser.admin === true){
                 console.log(this.state.currentuser.company_id)
                 let company_id = parseInt(this.state.currentuser.company_id);
-                employees = <Employees companyId={company_id} />
+                main = <Employees companyId={company_id} />
             }
         }
 
@@ -54,7 +54,7 @@ class Dashboard extends React.Component {
             <Row>
                 <Col>
                     <h2>Dashboard</h2>
-                    {employees}
+                    {main}
                 </Col>
             </Row>
         )

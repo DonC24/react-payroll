@@ -1,43 +1,46 @@
 module.exports = (db) => {
 
-    let apiget = (request, response) => {
-        const stuff = {
-            banana: 'oranges',
-            kiwi: 'apple'
-        };
-        response.send(stuff);
-    };
-
-    let get = (request, response) => {
-
-        console.log( db )
-
-        db.contracts.get(request.params.id, (error, pokemon) => {
-            // queryResult contains pokemon data returned from the pokemon model
+    let createContract = (request, response) => {
+        // console.log("in create contract controller")
+        // console.log(request.body);
+        db.contracts.createContract(request.body,(error,result)=>{
             if (error) {
-
-              console.error('error getting pokemon', error);
+              console.error('error getting contract', error);
               response.status(500);
               response.send('server error');
-
             } else {
-
-                if( pokemon === null ){
-                    // render pokemon view in the pokemon folder
+                if( result === null ){
                     response.status(404);
                     response.send('not found');
                 }else{
-                    // render pokemon view in the pokemon folder
-                    response.render('pokemon/show', { pokemon: pokemon });
+                    console.log("CONTRACT CREATED")
+                    response.send(result);
+                }
+            }
+        })
+    };
+
+    let getAContract = (request, response) => {
+        // console.log( db )
+        db.contracts.get(request.params.id, (error, result) => {
+            if (error) {
+              console.error('error getting contract', error);
+              response.status(500);
+              response.send('server error');
+            } else {
+                if( result === null ){
+                    response.status(404);
+                    response.send('not found');
+                }else{
+                    response.send(result);
                 }
             }
         });
     };
 
     return {
-
-        get : get,
-        apiget : apiget
+        createContract : createContract,
+        getAContract : getAContract,
     }
 
 };
