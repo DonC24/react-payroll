@@ -48,6 +48,9 @@ npm run lint
 HTTP_PORT=3001 npm run dev
 ```
 
+### Note
+- User password for seeded users are "pw" + NAME (eg: "pwbatman" for user named batman)
+
 ### Unsolved Issues
 - Have yet to create a route to show employees, contracts, and payroll.
 - Learnt about react-admin too late, did not implement, but I think it would be good to use.
