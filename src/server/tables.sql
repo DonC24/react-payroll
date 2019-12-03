@@ -44,4 +44,7 @@ CREATE TABLE IF NOT EXISTS payroll (
   companycpf INTEGER,
   employeerate DECIMAL,
   employeecpf INTEGER,
+  totalcpf INTEGER,
+  totalded DECIMAL,
+  netsalary DECIMAL,
   FOREIGN KEY (user_id) REFERENCES users(id));

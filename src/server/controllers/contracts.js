@@ -20,9 +20,9 @@ module.exports = (db) => {
         })
     };
 
-    let getAContract = (request, response) => {
+    let getContract = (request, response) => {
         // console.log( db )
-        db.contracts.get(request.params.id, (error, result) => {
+        db.contracts.getContract(request.params.id, (error, result) => {
             if (error) {
               console.error('error getting contract', error);
               response.status(500);
@@ -40,7 +40,7 @@ module.exports = (db) => {
 
     return {
         createContract : createContract,
-        getAContract : getAContract,
+        getContract : getContract,
     }
 
 };

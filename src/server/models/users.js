@@ -65,7 +65,6 @@ module.exports = (dbPoolInstance) => {
 
         dbPoolInstance.query(query, arr, (error, queryResult) => {
             if (queryResult.rows.length > 0) {
-                console.log(queryResult);
                 callback(null, queryResult.rows);
             } else {
                 callback(null, null);
@@ -164,6 +163,7 @@ module.exports = (dbPoolInstance) => {
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                 console.log("GET USER DETAILS BY ID SUCCESS");
+                console.log(queryResult.rows[0])
                 return queryResult.rows[0];
             }else{
                 return Promise.reject(new Error("get user details by id return null"));

@@ -72,7 +72,6 @@ module.exports = (db) => {
             // console.log(result)
             if (result) {
                     console.log("THERE ARE EMPLOYEES");
-                    console.log(response);
                     response.send(result);
 
             } else {
@@ -111,6 +110,16 @@ module.exports = (db) => {
         }
     }
 
+    let getUser = async function(request,response){
+        try{
+            let user_id = request.params.id;
+            let result = await db.users.getUserDetailsById(user_id);
+            response.send(result)
+        }catch (error){
+            console.log("get user info controller "+ error)
+        }
+    }
+
 
     let getUserInfo = async function(request,response){
         try{
@@ -123,6 +132,7 @@ module.exports = (db) => {
     }
 
     return {
+        getUser : getUser,
         getAllUsers : getAllUsers,
         signUp : signUp,
         login : login,

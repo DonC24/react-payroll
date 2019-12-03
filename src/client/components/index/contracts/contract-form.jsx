@@ -14,7 +14,7 @@ class ContractForm extends React.Component {
                 basicsalary: null,
                 basichours: null,
                 daysperwk: null,
-                // hourlyrate: null
+
             },
             errorMessage: ""
         };
@@ -64,13 +64,6 @@ class ContractForm extends React.Component {
     updateDaysPerWk = (e) => {
         let formInputs = this.state.formInputs;
         formInputs.daysperwk = e.target.value;
-        this.setState({formInputs: formInputs});
-    };
-    updateHourlyRate = (e) => {
-        console.log("hourly rate on change")
-        console.log(e);
-        let formInputs = this.state.formInputs;
-        formInputs.hourlyrate = e.target.value;
         this.setState({formInputs: formInputs});
     };
     updateEmployee = (e) => {
@@ -124,6 +117,9 @@ class ContractForm extends React.Component {
 
     createContract = (data) => {
         console.log("in create contract");
+        // console.log(data);
+        let hrlyRate = ((12 * parseInt(this.state.formInputs.basicsalary)) / (52 * parseFloat(this.state.formInputs.daysperwk) * parseFloat(this.state.formInputs.basichours)));
+        data.hourlyrate = hrlyRate;
         console.log(data);
         fetch('/contract', {
             method: 'POST', // or 'PUT'
@@ -149,7 +145,6 @@ class ContractForm extends React.Component {
         }
 
         let hrlyRate = ((12 * parseInt(this.state.formInputs.basicsalary)) / (52 * parseFloat(this.state.formInputs.daysperwk) * parseFloat(this.state.formInputs.basichours)));
-        // cannot setstate here. not sure how to setstate for hourly rate.
         console.log("hrly Rate: " + hrlyRate);
 
         return (

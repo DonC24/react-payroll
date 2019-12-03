@@ -3,6 +3,7 @@ const pokemon = require('./models/pokemon');
 
 const users = require('./models/users');
 const contracts = require('./models/contracts');
+const payroll = require('./models/payroll');
 
 const url = require('url');
 
@@ -46,6 +47,7 @@ module.exports = {
   pokemon: pokemon(pool),
   users: users(pool),
   contracts: contracts(pool),
+  payroll: payroll(pool),
 
   //make queries directly from here
   queryInterface: (text, params, callback) => {

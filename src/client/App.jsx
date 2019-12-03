@@ -7,6 +7,7 @@ import Signup from './components/user/signup/signup';
 import Login from './components/user/login/login';
 import Dashboard from './components/index/dashboard/dashboard';
 import Contract from './components/index/contracts/contract';
+import Payroll from './components/index/payroll/payroll';
 
 import { sha256 } from 'js-sha256';
 const SALT = "This is a payroll";
@@ -67,6 +68,7 @@ class App extends React.Component {
                         <Route path="/signup" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
                         <Route path="/login" render={props => (this.state.authed ? <Redirect to='/' /> : <Login {...props}/>)}/>
                         <Route path="/contracts" render={props => (this.state.authed ? <Contract {...props} /> : <Redirect to='/' />)}/>
+                        <Route path="/payroll" render={props => (this.state.authed ? <Payroll {...props} /> : <Redirect to='/' />)}/>
                     </Switch>
                 </Container>
             </Router>
