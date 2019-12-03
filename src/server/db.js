@@ -44,6 +44,7 @@ module.exports = {
   /*
    * ADD APP MODELS HERE
    */
+  pokemon: pokemon(pool),
   users: users(pool),
   contracts: contracts(pool),
   payroll: payroll(pool),
