@@ -1,4 +1,4 @@
-React boilerplate with ES2015, Express.js, and Webpack
+A React Payroll app
 
 ## Technologies
 
@@ -7,6 +7,7 @@ React boilerplate with ES2015, Express.js, and Webpack
 - Webpack 4 (production and development configurations)
 - SCSS support (+ sanitize.css included)
 - ES2015+
+- PostgreSql
 
 ## Features
 - preconfigured eslint and Prettier code formatter
@@ -22,13 +23,10 @@ npm install -g nodemon
 
 ### Installation
 ```bash
-git clone https://github.com/wdi-sg/react-express-webpack.git
-cd react-express-webpack
 npm install
-
-
-# remove boilerplate git references
-rm ./.git
+createdb DATABASE_NAME -U USERNAME
+psql -d DATABASE_NAME -U USERNAME -f tables.sql
+psql -d DATABASE_NAME -U USERNAME -f seed.sql
 ```
 
 ### Scripts
@@ -50,11 +48,12 @@ npm run lint
 HTTP_PORT=3001 npm run dev
 ```
 
+### Unsolved Issues
+- Have yet to create a route to show employees, contracts, and payroll.
+- Learnt about react-admin too late, did not implement, but I think it would be good to use.
+
 ### Deploy
 
 Some operating systems do not copy the server files to the build directory.
 
 See the documentation here: [https://github.com/calvinmetcalf/copyfiles/blob/master/readme.md](https://github.com/calvinmetcalf/copyfiles/blob/master/readme.md)
-
-## License
-MIT License. Free use and change.
