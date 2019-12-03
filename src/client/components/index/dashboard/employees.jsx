@@ -2,7 +2,6 @@ import React from 'react';
 import {Col,Row, Button,Modal} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
-// import Users from "./users";
 import mainStyles from "../../..//style.scss";
 
 var Moment = require('moment');
@@ -77,7 +76,8 @@ class Employees extends React.Component {
             <Row>
                 <Col>
                     <h2>Employees</h2>
-                    <Link to="/contracts">Create new contract</Link>
+                    <Link to="/contracts">Create new contract </Link>
+                    <Link to="/payroll">Create new payroll</Link>
                     <table>
                         <thead>
                             <tr>

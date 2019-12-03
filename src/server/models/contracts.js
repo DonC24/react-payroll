@@ -28,7 +28,26 @@ module.exports = (dbPoolInstance) => {
         });
     };
 
-    let getAContract = (id, callback) => {
+    let isContractExist = (userInfo, callback) => {
+        let query = "SELECT EXISTS (SELECT * FROM contracts WHERE user_id=$1)"
+        let arr = [userInfo.user_id];
+
+        dbPoolInstance.query(query, arr, (error, queryResult) => {
+            if (error) {
+                callback(error, null);
+
+            } else {
+                if (queryResult.rows.length > 0) {
+
+                    callback(null, queryResult.rows[0]);
+                } else {
+                    callback(null, null);
+                }
+            }
+        });
+    }
+
+    let getContract = (id, callback) => {
         console.log(id)
         let query = "SELECT * FROM contracts WHERE user_id = $1"
         let arr = [id];
@@ -50,6 +69,7 @@ module.exports = (dbPoolInstance) => {
 
   return {
     createContract,
-    getAContract
+    getContract,
+    isContractExist
   };
 };

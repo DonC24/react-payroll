@@ -1,30 +1,40 @@
 module.exports = (db) => {
 
-    let createContract = (request, response) => {
-        console.log("in create contract controller")
+    let createPayroll = (request, response) => {
+        console.log("in create Payroll controller")
         console.log(request.body);
-        db.contracts.createContract(request.body,(error,result)=>{
-            if (error) {
-              console.error('error getting contract', error);
-              response.status(500);
-              response.send('server error');
-            } else {
-                if( result === null ){
-                    response.status(404);
-                    response.send('not found');
-                }else{
-                    console.log("CONTRACT CREATED")
-                    response.send("Contract Created" + result);
-                }
-            }
-        })
+
+        // db.contracts.isContractExist(request.body,(error,result)=>{
+        //     if (result.exists) {
+
+                db.payroll.createPayroll(request.body,(error,result)=>{
+                    if (error) {
+                      console.error('error getting Payroll', error);
+                      response.status(500);
+                      response.send('server error');
+                    } else {
+                        if( result === null ){
+                            response.status(404);
+                            response.send('not found');
+                        }else{
+                            console.log("PAYROLL CREATED")
+                            response.send("Payroll Created" + result);
+                        }
+                    }
+                })
+
+        //     } else {
+        //         console.log("NO CONTRACT")
+        //         response.send("There is no contract")
+        //     }
+        // })
     };
 
-    let getAContract = (request, response) => {
+    let getPayroll = (request, response) => {
         // console.log( db )
-        db.contracts.get(request.params.id, (error, result) => {
+        db.payroll.get(request.params.id, (error, result) => {
             if (error) {
-              console.error('error getting contract', error);
+              console.error('error getting Payroll', error);
               response.status(500);
               response.send('server error');
             } else {
@@ -39,8 +49,8 @@ module.exports = (db) => {
     };
 
     return {
-        createContract : createContract,
-        getAContract : getAContract,
+        createPayroll : createPayroll,
+        getPayroll : getPayroll,
     }
 
 };
