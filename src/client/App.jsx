@@ -30,7 +30,21 @@ class App extends React.Component {
         this.checkUser();
     }
 
-
+    signOut = () => {
+        fetch('/signout', {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .then(res => {
+                document.cookie = 'session='+sha256(SALT)+'; path=/';
+                document.cookie = 'user_id=0 ; path=/';
+                this.props.checkUser();
+                this.props.history.push('/');
+            })
+            .catch(error => console.error('Error:', error));
+    };
 
     checkUser = () => {
         let cookies = {};
@@ -57,9 +71,10 @@ class App extends React.Component {
 
             <Router>
                 <nav>
-                    <h1>React Router</h1>
+                    <h1>Payroll React Router</h1>
                     <Link to="/signup">Sign Up </Link>
                     <Link to="/login">Login </Link>
+                    <button onClick={this.signOut}>Logout </button>
                     <Link to="/">Home </Link>
                 </nav>
                 <Container>

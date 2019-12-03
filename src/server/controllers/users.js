@@ -61,6 +61,7 @@ module.exports = (db) => {
     let signOut = (request, response) =>{
 
         response.cookie("user_id", null)
+        response.cookie("user_name", null)
         response.cookie("session", sha256(SALT))
         console.log("successful signout")
         response.send(true)

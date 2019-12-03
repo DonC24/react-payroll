@@ -26,7 +26,7 @@ if( process.env.DATABASE_URL ){
 }else{
   configs = {
     user: 'donc',
-
+    password: 'password',
     host: '127.0.0.1',
     database: 'payrollmm',
     port: 5432
@@ -44,6 +44,7 @@ module.exports = {
   /*
    * ADD APP MODELS HERE
    */
+  pokemon: pokemon(pool),
   users: users(pool),
   contracts: contracts(pool),
   payroll: payroll(pool),
