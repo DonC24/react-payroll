@@ -19,7 +19,7 @@ class Details extends React.Component {
     mapPay = (array) => {
         return array.map(payroll => {
 
-            let payrollMonth = Moment(payroll.month).utc().format("MMM");
+            let payrollMonth = Moment(payroll.month).utc().format("MMM YYYY");
             let companyrate = payroll.companyrate * 100;
             let employeerate = payroll.employeerate *100;
 
@@ -99,7 +99,9 @@ class Details extends React.Component {
         }
         let payHeaders=""
         let payDeets = ""
-        if(this.state.payroll){
+        if(this.state.payroll === false || this.state.payroll === null){
+            payDeets = <p>There are no payroll details to display</p>
+        } else {
             payHeaders = <tr>
                                 <th scope="col">Payroll Month</th>
                                 <th scope="col">Allowance</th>

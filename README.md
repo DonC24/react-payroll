@@ -23,6 +23,7 @@ npm install -g nodemon
 
 ### Installation
 ```bash
+Clone this repository onto your local machine
 npm install
 createdb DATABASE_NAME -U USERNAME
 psql -d DATABASE_NAME -U USERNAME -f tables.sql
@@ -49,7 +50,7 @@ HTTP_PORT=3001 npm run dev
 ```
 
 ### Note
-- User password for seeded users are "pw" + NAME (eg: "pwbatman" for user named batman)
+- User password for seeded users are "pw" + NAME (eg: "pwbatman" for user named batman. Only the user named Captain America's password is "pwcapam")
 
 ### Unsolved Issues
 - Have yet to create a route to show employees, contracts, and payroll.
