@@ -155,7 +155,7 @@ class PayrollForm extends React.Component {
         let gross = parseFloat(this.state.formInputs.grosssalary);
         let sg = this.state.empinfo.nationality;
         let formInputs = this.state.formInputs;
-        if(sg === "Singaporean" || sg == "Singaporean PR"){
+        if(sg === "Singaporean" || sg === "Singaporean PR"){
             if(age <= 55){
                 let companyrate = (17/100);
                 let employeerate = (20/100);

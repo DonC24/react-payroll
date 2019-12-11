@@ -32,7 +32,7 @@ module.exports = (db) => {
 
     let getPayroll = (request, response) => {
         // console.log( db )
-        db.payroll.get(request.params.id, (error, result) => {
+        db.payroll.getPayroll(request.params.id, (error, result) => {
             if (error) {
               console.error('error getting Payroll', error);
               response.status(500);

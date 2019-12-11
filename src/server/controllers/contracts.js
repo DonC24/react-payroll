@@ -29,8 +29,8 @@ module.exports = (db) => {
               response.send('server error');
             } else {
                 if( result === null ){
-                    response.status(404);
-                    response.send('not found');
+                    // response.status(404);
+                    response.send(false);
                 }else{
                     response.send(result);
                 }

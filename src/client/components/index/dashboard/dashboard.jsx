@@ -3,16 +3,23 @@ import {Col,Row, Button,Modal} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import Employees from "./employees";
+import Details from "./details";
 import mainStyles from "../../..//style.scss";
 
 class Dashboard extends React.Component {
     constructor(){
         super();
         this.state = {
+            currentComponent: "page1",
             errorMessage: "",
             currentuser: null,
-            employees: []
+
         };
+    }
+
+    changeComponent = (input) => {
+        console.log(input);
+        this.setState({currentComponent: input});
     }
 
     getCurrentUser = () => {
@@ -42,10 +49,15 @@ class Dashboard extends React.Component {
 
         let main = "";
         if(this.state.currentuser){
-            if(this.state.currentuser.admin === true){
+            console.log("admin? " + this.state.currentuser.admin);
+
+            let adminstat = this.state.currentuser.admin;
+            if(adminstat === true){
                 console.log(this.state.currentuser.company_id)
                 let company_id = parseInt(this.state.currentuser.company_id);
                 main = <Employees companyId={company_id} />
+            } else {
+                main = <Details currentuser={this.state.currentuser} />
             }
         }
 

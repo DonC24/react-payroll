@@ -40,7 +40,7 @@ module.exports = (dbPoolInstance) => {
 
     let getPayroll = (id, callback) => {
         console.log(id)
-        let query = "SELECT * FROM Payrolls WHERE user_id = $1"
+        let query = "SELECT * FROM payroll WHERE user_id = $1"
         let arr = [id];
 
         dbPoolInstance.query(query, arr, (error, queryResult) => {
@@ -49,7 +49,7 @@ module.exports = (dbPoolInstance) => {
                 callback(error, null);
             }else{
                 if (queryResult.rows.length > 0) {
-                    callback(null, queryResult.rows[0]);
+                    callback(null, queryResult.rows);
                 } else {
                     callback(null, null);
                 }

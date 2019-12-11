@@ -28,7 +28,7 @@ class Employees extends React.Component {
             .catch(error => console.error('Error:', error));
     }
 
-    mapfunc(array) {
+    mapfunc = (array) => {
         return array.map(anemployee => {
 
             let formatteddate = Moment(anemployee.birthdate).utc().format("DD MMM YYYY");
@@ -43,7 +43,7 @@ class Employees extends React.Component {
                     <td>{`${anemployee.ethnic}`}</td>
                     <td>{`${formatteddate}`}</td>
                     <td>{`${anemployee.admin}`}</td>
-                    <td><a href="#">View employee details</a></td>
+                    <td><a href="#">View employee details</a></td> //fetch '/user/:id'
                     <td><a href="#">Edit employee details</a></td>
                     <td><a href="#">Delete employee</a></td>
                 </tr>
